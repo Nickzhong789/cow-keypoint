@@ -84,12 +84,17 @@ class MainWindow(QMainWindow):
         if path is None or path == '':
             return
 
-        img_format = ['jpg', 'png']
-        self.img_list = [file for file in os.listdir(path) if file.__contains__(img_format)]
-        self.idx = -1 if len(self.img_list) > 0 else 0
+        self.img_list = [file for file in os.listdir(path) if file.endswith(".jpg") or file.endswith(".png")]
+        self.idx = -1 if len(self.img_list) > 0 else None
 
+        if self.idx is None:
+            return
+        else:
+            if self.idx < len(self.img_list) - 1:
+                self.idx += 1
+            self.img = os.path.join(path, self.img_list[self.idx])
 
-        self.canvas.update(path)
+            self.canvas.update(path)
 
     def preImage(self):
             pass
