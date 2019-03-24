@@ -19,7 +19,7 @@ class Canvas(FigureCanvas):
         self.cursor.visible = False
         self.img = None
 
-    def update(self, path):
+    def updateCanvas(self, path):
         self.subfig.cla()
         self.img = Image.open(path)
         self.subfig.imshow(self.img)

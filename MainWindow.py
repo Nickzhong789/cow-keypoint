@@ -6,8 +6,9 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtWidgets,QtCore,QtGui,Qt
+from PyQt5 import QtWidgets,QtCore
 from PyQt5.QtWidgets import QMainWindow, QFileDialog
+from PyQt5.QtWidgets import QMessageBox
 import sys
 from canvas import Canvas
 import os
@@ -22,6 +23,7 @@ class MainWindow(QMainWindow):
         self.canvas = Canvas(self)
         self.idx = None
         self.img_list = None
+        self.path = None
 
         self.horizontalLayoutWidget = QtWidgets.QWidget(self)
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 560, 921, 28))
@@ -56,18 +58,12 @@ class MainWindow(QMainWindow):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.frame = QtWidgets.QFrame(self.verticalLayoutWidget)
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame.setObjectName("frame")
 
-        self.verticalLayout.addWidget(self.frame)
+        self.verticalLayout.addWidget(self.canvas)
         self.horizontalLayoutWidget.raise_()
         self.verticalLayoutWidget.raise_()
-        self.frame.raise_()
         self.nextImgBtn.raise_()
         self.detectBtn.raise_()
-        self.frame.raise_()
 
         QtCore.QMetaObject.connectSlotsByName(self)
 
@@ -80,30 +76,41 @@ class MainWindow(QMainWindow):
             self.detectBtn.clicked.connect(self.detectKeypoints)
 
     def openImage(self):
-        path = QFileDialog.getExistingDirectory(self, 'select Image Dir', '.')
-        if path is None or path == '':
+        self.path = QFileDialog.getExistingDirectory(self, 'select Image Dir', '.')
+        if self.path is None or self.path == '':
             return
 
-        self.img_list = [file for file in os.listdir(path) if file.endswith(".jpg") or file.endswith(".png")]
+        self.img_list = [file for file in os.listdir(self.path) if file.endswith(".jpg") or file.endswith(".png")]
         self.idx = -1 if len(self.img_list) > 0 else None
 
-        if self.idx is None:
-            return
-        else:
-            if self.idx < len(self.img_list) - 1:
-                self.idx += 1
-            self.img = os.path.join(path, self.img_list[self.idx])
-
-            self.canvas.update(path)
+        self.loadImg(self.idx, self.path)
 
     def preImage(self):
-            pass
+        if self.idx is None:
+            return
+        if self.idx < 0:
+            QMessageBox.information(self, 'Warning', 'Already the first image!', QMessageBox.Ok)
+
+        else:
+            self.idx -= 1
+            self.loadImg(self.idx, self.path)
 
     def nextImage(self):
-            pass
+        if self.idx is None:
+            return
+        if self.idx >= len(self.img_list) - 1:
+            QMessageBox.information(self, 'Warning', 'Already the last image!', QMessageBox.Ok)
+
+        else:
+            self.idx += 1
+            self.loadImg(self.idx, self.path)
 
     def detectKeypoints(self):
             pass
+
+    def loadImg(self, idx, path):
+        img = os.path.join(path, self.img_list[idx])
+        self.canvas.updateCanvas(img)
 
 
 if __name__ == '__main__':
