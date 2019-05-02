@@ -1,13 +1,10 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'testMainWindow.ui'
-#
-# Created by: PyQt5 UI code generator 5.9.1
-#
-# WARNING! All changes made in this file will be lost!
-
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtWidgets,QtCore
+from PyQt5.QtWidgets import QMainWindow, QFileDialog
+from PyQt5.QtWidgets import QMessageBox
 import sys
+from canvas import Canvas
+import os
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -22,6 +19,9 @@ class Ui_Form(object):
         self.openImgBtn = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.openImgBtn.setObjectName("openImgBtn")
         self.horizontalLayout.addWidget(self.openImgBtn)
+        self.trainButton = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.trainButton.setObjectName("trainButton")
+        self.horizontalLayout.addWidget(self.trainButton)
         self.preImgBtn = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.preImgBtn.setObjectName("preImgBtn")
         self.horizontalLayout.addWidget(self.preImgBtn)
@@ -42,12 +42,6 @@ class Ui_Form(object):
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.verticalLayout.addWidget(self.frame)
-        self.horizontalLayoutWidget.raise_()
-        self.verticalLayoutWidget.raise_()
-        self.frame.raise_()
-        self.nextImgBtn.raise_()
-        self.showBtn.raise_()
-        self.frame.raise_()
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -56,14 +50,9 @@ class Ui_Form(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.openImgBtn.setText(_translate("Form", "Open"))
+        self.trainButton.setText(_translate("Form", "Train"))
         self.preImgBtn.setText(_translate("Form", "Pre"))
         self.nextImgBtn.setText(_translate("Form", "Next"))
-        self.showBtn.setText(_translate("Form", "Show"))
+        self.showBtn.setText(_translate("Form", "Detect"))
 
-
-if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-    main_window = Ui_Form()
-    main_window.show()
-    sys.exit(app.exec_())
 

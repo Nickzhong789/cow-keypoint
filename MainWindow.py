@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import QMessageBox
 import sys
 from canvas import Canvas
 import os
+from TrainDialog import TrainDialog
 
 
 class MainWindow(QMainWindow):
@@ -36,6 +37,11 @@ class MainWindow(QMainWindow):
         self.openImgBtn.setObjectName("openImgBtn")
         self.openImgBtn.setText("Open")
         self.horizontalLayout.addWidget(self.openImgBtn)
+
+        self.trainButton = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.trainButton.setObjectName("trainButton")
+        self.trainButton.setText("train")
+        self.horizontalLayout.addWidget(self.trainButton)
 
         self.preImgBtn = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.preImgBtn.setObjectName("preImgBtn")
@@ -62,8 +68,8 @@ class MainWindow(QMainWindow):
         self.verticalLayout.addWidget(self.canvas)
         self.horizontalLayoutWidget.raise_()
         self.verticalLayoutWidget.raise_()
-        self.nextImgBtn.raise_()
-        self.detectBtn.raise_()
+        # self.nextImgBtn.raise_()
+        # self.detectBtn.raise_()
 
         QtCore.QMetaObject.connectSlotsByName(self)
 
@@ -71,6 +77,7 @@ class MainWindow(QMainWindow):
 
     def connectEvent(self):
             self.openImgBtn.clicked.connect(self.openImage)
+            self.trainButton.clicked.connect(self.trainModels)
             self.preImgBtn.clicked.connect(self.preImage)
             self.nextImgBtn.clicked.connect(self.nextImage)
             self.detectBtn.clicked.connect(self.detectKeypoints)
@@ -84,6 +91,10 @@ class MainWindow(QMainWindow):
         self.idx = -1 if len(self.img_list) > 0 else None
 
         self.loadImg(self.idx, self.path)
+
+    def trainModels(self):
+        dialog = TrainDialog()
+        dialog.exec()
 
     def preImage(self):
         if self.idx is None:

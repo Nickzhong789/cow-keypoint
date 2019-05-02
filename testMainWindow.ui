@@ -31,6 +31,13 @@
      </widget>
     </item>
     <item>
+     <widget class="QPushButton" name="trainButton">
+      <property name="text">
+       <string>Train</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="preImgBtn">
       <property name="text">
        <string>Pre</string>
@@ -47,7 +54,7 @@
     <item>
      <widget class="QPushButton" name="showBtn">
       <property name="text">
-       <string>Show</string>
+       <string>Detect</string>
       </property>
      </widget>
     </item>
@@ -75,12 +82,6 @@
     </item>
    </layout>
   </widget>
-  <zorder>horizontalLayoutWidget</zorder>
-  <zorder>verticalLayoutWidget</zorder>
-  <zorder>frame</zorder>
-  <zorder>nextImgBtn</zorder>
-  <zorder>showBtn</zorder>
-  <zorder>frame</zorder>
  </widget>
  <resources/>
  <connections/>
